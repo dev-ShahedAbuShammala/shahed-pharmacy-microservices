@@ -1,0 +1,36 @@
+server:
+  port: 7417
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: medicine-service
+              uri: lb://MEDICINE-SERVICE
+              predicates:
+                - Path=/medicines/**
+
+            - id: customer-service
+              uri: lb://CUSTOMER-SERVICE
+              predicates:
+                - Path=/customers/**
+
+            - id: supplier-service
+              uri: lb://SUPPLIER-SERVICE
+              predicates:
+                - Path=/suppliers/**
+
+            - id: prescription-service
+              uri: lb://PRESCRIPTION-SERVICE
+              predicates:
+                - Path=/prescriptions/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
